@@ -1,0 +1,14 @@
+name: "Gira Coris"
+navbar:
+  title: "Primer informe"
+  left:
+    - text: "Coris"
+      href: index.html
+    - text: "Metodología"
+      href: about.html
+    - text: "Piranga rubra"
+      href: coris1.html
+    - text: "Sturnella magna"  
+      href: coris2.html
+    - text: Bibliografía  
+      href: biblio.html
