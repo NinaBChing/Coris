@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Análisis</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Primer informe</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Coris</a>
+</li>
+<li>
+  <a href="about.html">Metodología</a>
+</li>
+<li>
+  <a href="coris1.html">Piranga rubra</a>
+</li>
+<li>
+  <a href="coris2.html">Sturnella magna</a>
+</li>
+<li>
+  <a href="biblio.html">Bibliografía</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore"><span style="color:orange">Análisis</span></h1>
+
+</div>
+
+
+<p align="justify">
+<p>En total se lograron observar 62 especies de aves, siendo los individuos de <em>Spatula discors</em>, <em>Bubulcus ibis</em> y <em>Quiscalus mexicanus</em> los más abundantes en orden decreciente respectivamente.<br />
+Según la lista roja de la UICN, Sturnella magna fue la única especie con una clasificación cercanamente amenazada, el resto es de baja preocupación (Fig.3). La mayoría con un estatus de aves residentes (Fig.4)</p>
+Tabla.1.Lista de especies observadas en Coris: <strong>C= </strong>crece <strong>DECRE=</strong> decrece <strong>E=</strong> estable <strong>DESC=</strong> desconocida <strong>LC=</strong> menor preocupación <strong>R=</strong>Residente <strong>RM=</strong>Residente o migratorio <strong>REND=</strong>Endémico <strong>M=</strong>Migratorio
+</p>
+<table>
+<thead>
+<tr class="header">
+<th>Especie</th>
+<th>Conteo</th>
+<th>GA</th>
+<th>Tendencia</th>
+<th>Sitio</th>
+<th>Estatus</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Dendrocygna autumnalis</td>
+<td>3</td>
+<td>LC</td>
+<td>C</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="even">
+<td>Spatula discors</td>
+<td>72</td>
+<td>LC</td>
+<td>DECRE</td>
+<td>B</td>
+<td>M</td>
+</tr>
+<tr class="odd">
+<td>Tachybaptus dominicus</td>
+<td>1</td>
+<td>LC</td>
+<td>E</td>
+<td>B</td>
+<td>R</td>
+</tr>
+<tr class="even">
+<td>Patagioenas flavirostris</td>
+<td>12</td>
+<td>LC</td>
+<td>DECRE</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="odd">
+<td>Columbina inca</td>
+<td>5</td>
+<td>LC</td>
+<td>C</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="even">
+<td>Columbina talpacoti</td>
+<td>6</td>
+<td>LC</td>
+<td>C</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="odd">
+<td>Leptotila verreauxi</td>
+<td>2</td>
+<td>LC</td>
+<td>C</td>
+<td>A</td>
+<td>RM</td>
+</tr>
+<tr class="even">
+<td>Zenaida asiatica</td>
+<td>1</td>
+<td>LC</td>
+<td>C</td>
+<td>A</td>
+<td>RM</td>
+</tr>
+<tr class="odd">
+<td>Zenaida macroura</td>
+<td>3</td>
+<td>LC</td>
+<td>C</td>
+<td>B</td>
+<td>RM</td>
+</tr>
+<tr class="even">
+<td>Piaya cayana</td>
+<td>1</td>
+<td>LC</td>
+<td>E</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="odd">
+<td>Amazilia saucerottei</td>
+<td>1</td>
+<td>LC</td>
+<td>C</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="even">
+<td>Amazilia tzacatl</td>
+<td>5</td>
+<td>LC</td>
+<td>DESC</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="odd">
+<td>Gallinula galeata</td>
+<td>3</td>
+<td>LC</td>
+<td>E</td>
+<td>B</td>
+<td>RM</td>
+</tr>
+<tr class="even">
+<td>Fulica americana</td>
+<td>9</td>
+<td>LC</td>
+<td>DECRE</td>
+<td>B</td>
+<td>RM</td>
+</tr>
+<tr class="odd">
+<td>Himantopus mexicanus</td>
+<td>28</td>
+<td>LC</td>
+<td>C</td>
+<td>B</td>
+<td>RM</td>
+</tr>
+<tr class="even">
+<td>Vanellus chilensis</td>
+<td>22</td>
+<td>LC</td>
+<td>C</td>
+<td>B</td>
+<td>R</td>
+</tr>
+<tr class="odd">
+<td>Charadrius vociferus</td>
+<td>1</td>
+<td>LC</td>
+<td>DECRE</td>
+<td>B</td>
+<td>RM</td>
+</tr>
+<tr class="even">
+<td>Jacana spinosa</td>
+<td>13</td>
+<td>LC</td>
+<td>DESC</td>
+<td>B</td>
+<td>R</td>
+</tr>
+<tr class="odd">
+<td>Ardea alba</td>
+<td>3</td>
+<td>LC</td>
+<td>DESC</td>
+<td>B</td>
+<td>RM</td>
+</tr>
+<tr class="even">
+<td>Egretta thula</td>
+<td>2</td>
+<td>LC</td>
+<td>C</td>
+<td>A</td>
+<td>RM</td>
+</tr>
+<tr class="odd">
+<td>Egretta caerulea</td>
+<td>6</td>
+<td>LC</td>
+<td>DECRE</td>
+<td>A</td>
+<td>RM</td>
+</tr>
+<tr class="even">
+<td>Bubulcus ibis</td>
+<td>60</td>
+<td>LC</td>
+<td>C</td>
+<td>A</td>
+<td>RM</td>
+</tr>
+<tr class="odd">
+<td>Butorides virescens</td>
+<td>3</td>
+<td>LC</td>
+<td>DECRE</td>
+<td>A</td>
+<td>RM</td>
+</tr>
+<tr class="even">
+<td>Coragyps atratus</td>
+<td>9</td>
+<td>LC</td>
+<td>C</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="odd">
+<td>Cathartes aura</td>
+<td>2</td>
+<td>LC</td>
+<td>E</td>
+<td>A</td>
+<td>RM</td>
+</tr>
+<tr class="even">
+<td>Elanus leucurus</td>
+<td>1</td>
+<td>LC</td>
+<td>C</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="odd">
+<td>Spizaetus tyrannus</td>
+<td>1</td>
+<td>LC</td>
+<td>DECRE</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="even">
+<td>Rupornis magnirostris</td>
+<td>2</td>
+<td>LC</td>
+<td>C</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="odd">
+<td>Buteo platypterus</td>
+<td>1</td>
+<td>LC</td>
+<td>C</td>
+<td>A</td>
+<td>M</td>
+</tr>
+<tr class="even">
+<td>Buteo brachyurus</td>
+<td>1</td>
+<td>LC</td>
+<td>C</td>
+<td>A</td>
+<td>RM</td>
+</tr>
+<tr class="odd">
+<td>Momotus lessonii</td>
+<td>1</td>
+<td>LC</td>
+<td>DECRE</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="even">
+<td>Melanerpes hoffmannii</td>
+<td>6</td>
+<td>LC</td>
+<td>C</td>
+<td>A</td>
+<td>REND</td>
+</tr>
+<tr class="odd">
+<td>Milvago chimachima</td>
+<td>1</td>
+<td>LC</td>
+<td>C</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="even">
+<td>Zimmerius parvus</td>
+<td>1</td>
+<td>LC</td>
+<td>E</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="odd">
+<td>Sayornis nigricans</td>
+<td>4</td>
+<td>LC</td>
+<td>C</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="even">
+<td>Pitangus sulphuratus</td>
+<td>8</td>
+<td>LC</td>
+<td>C</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="odd">
+<td>Myiozetetes similis</td>
+<td>6</td>
+<td>LC</td>
+<td>E</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="even">
+<td>Tyrannus melancholicus</td>
+<td>1</td>
+<td>LC</td>
+<td>C</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="odd">
+<td>Psilorhinus morio</td>
+<td>7</td>
+<td>LC</td>
+<td>C</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="even">
+<td>Pygochelidon cyanoleuca</td>
+<td>5</td>
+<td>LC</td>
+<td>C</td>
+<td>A</td>
+<td>RM</td>
+</tr>
+<tr class="odd">
+<td>Stelgidopteryx serripennis</td>
+<td>1</td>
+<td>LC</td>
+<td>DECRE</td>
+<td>A</td>
+<td>RM</td>
+</tr>
+<tr class="even">
+<td>Troglodytes aedon</td>
+<td>2</td>
+<td>LC</td>
+<td>C</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="odd">
+<td>Cantorchilus modestus</td>
+<td>4</td>
+<td>LC</td>
+<td>DESC</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="even">
+<td>Catharus aurantiirostris</td>
+<td>3</td>
+<td>LC</td>
+<td>DESC</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="odd">
+<td>Spinus psaltria</td>
+<td>3</td>
+<td>LC</td>
+<td>DECRE</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="even">
+<td>Spinus xanthogastrus</td>
+<td>2</td>
+<td>LC</td>
+<td>DECRE</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="odd">
+<td>Zonotrichia capensis</td>
+<td>24</td>
+<td>LC</td>
+<td>E</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="even">
+<td>Melozone cabanisi</td>
+<td>1</td>
+<td>LC</td>
+<td>C</td>
+<td>A</td>
+<td>REND</td>
+</tr>
+<tr class="odd">
+<td>Sturnella magna</td>
+<td>8</td>
+<td>MELA</td>
+<td>C</td>
+<td>B</td>
+<td>R</td>
+</tr>
+<tr class="even">
+<td>Psarocolius montezuma</td>
+<td>6</td>
+<td></td>
+<td>E</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="odd">
+<td>Icterus galbula</td>
+<td>5</td>
+<td>LC</td>
+<td>E</td>
+<td>A</td>
+<td>M</td>
+</tr>
+<tr class="even">
+<td>Dives dives</td>
+<td>6</td>
+<td>LC</td>
+<td>C</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="odd">
+<td>Quiscalus mexicanus</td>
+<td>46</td>
+<td>LC</td>
+<td>E</td>
+<td>B</td>
+<td>R</td>
+</tr>
+<tr class="even">
+<td>Parkesia motacilla</td>
+<td>1</td>
+<td>LC</td>
+<td>C</td>
+<td>A</td>
+<td>M</td>
+</tr>
+<tr class="odd">
+<td>Oreothlypis peregrina</td>
+<td>4</td>
+<td>LC</td>
+<td>DESC</td>
+<td>A</td>
+<td>M</td>
+</tr>
+<tr class="even">
+<td>Geothlypis philadelphia</td>
+<td>1</td>
+<td>LC</td>
+<td>DECRE</td>
+<td>A</td>
+<td>M</td>
+</tr>
+<tr class="odd">
+<td>Setophaga petechia</td>
+<td>1</td>
+<td>LC</td>
+<td>E</td>
+<td>A</td>
+<td>RM</td>
+</tr>
+<tr class="even">
+<td>Basileuterus rufifrons</td>
+<td>2</td>
+<td>LC</td>
+<td>E</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="odd">
+<td>Cardellina pusilla</td>
+<td>1</td>
+<td>LC</td>
+<td>DECRE</td>
+<td>A</td>
+<td>M</td>
+</tr>
+<tr class="even">
+<td>Piranga rubra</td>
+<td>4</td>
+<td>LC</td>
+<td>E</td>
+<td>A</td>
+<td>M</td>
+</tr>
+<tr class="odd">
+<td>Sporophila morelleti</td>
+<td>1</td>
+<td>LC</td>
+<td>C</td>
+<td>A</td>
+<td>R</td>
+</tr>
+<tr class="even">
+<td>Passer domesticus</td>
+<td>12</td>
+<td>LC</td>
+<td>DECRE</td>
+<td>B</td>
+<td>R</td>
+</tr>
+</tbody>
+</table>
+<p align="center">
+<img src="imagenes/a.png" />
+<p>
+<p align="center">
+Fig.3 Grado de amenaza de las especies encontradas. Menor preocupación: 61 especies, Casi amenazadas: 1 especie.
+<p>
+<br />
+
+<p align="center">
+<img src="imagenes/b.png" />
+<p>
+<p align="center">
+Fig.4 Estatus de las especies encontradas. R:35 especies, REND:2 especies, RM:17 especies, M:8 especies
+<p>
+<br />
+
+<p align="justify">
+Se encontraron mayor número de especies en el sitio A, que en el sitio B (Fig.5). Además según los reportes por la UICN, un 47% de las especies encontradas presentan una tendencia poblacional creciente, un 22% decreciente, un 21% estable y un 10% deficiente de datos o desconocido (Fig.6).
+<p>
+<br />
+
+<p align="center">
+<img src="imagenes/c.png" />
+<p>
+<p align="center">
+Fig.5 Especies encontradas por sitio de observación. A:48 especies, B:14 especies.
+<p>
+<br />
+
+<p align="center">
+<img src="imagenes/d.png" />
+<p>
+<p align="center">
+Fig.6 Tendencia poblacional de las aves encontradas en general. Crece:47%, Decrece:22%, Estables:21% y Desconocidas:10%.
+<p>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
